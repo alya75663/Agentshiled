@@ -1,2 +1,0 @@
-import React from 'react'; import JsonViewer from './JsonViewer';
-export default function PlannerCard({planner}){return <section className="rounded-lg border bg-card p-4"><h3 className="font-semibold mb-2">Nemotron Planner</h3>{planner?<JsonViewer data={planner}/>:<p className="text-sm text-muted-foreground">No plan yet.</p>}<p className="text-xs mt-3 text-muted-foreground">NVIDIA Nemotron via Nebius Token Factory</p></section>}
