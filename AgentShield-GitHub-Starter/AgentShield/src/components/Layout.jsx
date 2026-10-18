@@ -1,0 +1,2 @@
+import React from 'react'; import {NavLink,Outlet} from 'react-router-dom';
+export default function Layout(){const links=[['/','Dashboard'],['/policies','Policies'],['/evaluation','Evaluation'],['/logs','Decision Log']];return <div className="min-h-screen"><nav className="border-b px-5 py-4 flex flex-wrap gap-4 items-center"><b className="mr-4">AgentShield</b>{links.map(([to,label])=><NavLink key={to} to={to} end={to==='/'} className={({isActive})=>'text-sm '+(isActive?'font-bold underline':'text-muted-foreground')}>{label}</NavLink>)}</nav><Outlet/></div>}
