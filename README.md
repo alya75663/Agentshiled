@@ -69,7 +69,7 @@ git clone YOUR_GITHUB_REPOSITORY_URL
 cd AgentShield
 ```
 
-Replace `https://github.com/alya75663/Agentshiled/tree/main` with your public GitHub repository URL.
+https://github.com/alya75663/Agentshiled/tree/main 
 
 ### 2. Configure environment variables
 
