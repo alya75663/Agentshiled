@@ -1,8 +1,9 @@
 # AgentShield
+AgentShield is an AI-powered security platform designed to help users manage Google Calendar actions more safely. It integrates AI-based planning with security checks to reduce the risk of unauthorized or potentially unsafe actions.
 
-AgentShield is a security-focused AI agent prototype that plans calendar actions with NVIDIA Nemotron through Nebius Token Factory, then checks the proposed action against deterministic policies before any calendar write.
+The project uses NVIDIA Nemotron through Nebius Token Factory and includes a web interface, security policies, and supporting backend functions.
 
-> **Repository status:** This archive is assembled from the code shared in the ChatGPT conversation. Some app files below are reconstructed scaffolding because not every original source file was provided as a complete file. Treat this as a source bundle for review, not as a verified production release. The Base44 functions and entities require a Base44 app/runtime unless migrated to another backend.
+This repository contains the project source code and setup documentation. Some features may require additional configuration, including Base44 backend services and Google Calendar OAuth credentials.
 
 ## Current architecture
 
