@@ -1,47 +1,148 @@
-# AgentShield
+# AgentShield 🛡️
 
-AgentShield is a security-focused AI agent prototype that plans calendar actions with NVIDIA Nemotron through Nebius Token Factory, then checks the proposed action against deterministic policies before any calendar write.
+**Safer AI-powered actions for Google Calendar.**
 
-> **Repository status:** This archive is assembled from the code shared in the ChatGPT conversation. Some app files below are reconstructed scaffolding because not every original source file was provided as a complete file. Treat this as a source bundle for review, not as a verified production release. The Base44 functions and entities require a Base44 app/runtime unless migrated to another backend.
+AgentShield is an AI-powered security platform designed to make AI-driven Google Calendar actions safer. It combines AI-based planning with deterministic security checks to help identify unauthorized or potentially unsafe actions before execution.
 
-## Current architecture
+Built using **NVIDIA Nemotron** through **Nebius Token Factory**, AgentShield explores how AI agents can interact with productivity tools while keeping security, user control, and action validation at the center of the workflow.
 
-- React + Vite interface.
-- Base44 SDK for authentication, entities, and server functions.
-- Nebius Token Factory OpenAI-compatible chat-completions endpoint configured for `nvidia/nemotron-3-super-120b-a12b`.
-- Deterministic policy guard and provenance helper.
-- Google Calendar OAuth token storage and event creation through Base44 server functions.
+## ✨ Key Features
 
-## Requirements
+* **AI-Powered Planning:** Uses NVIDIA Nemotron to interpret user requests and propose appropriate actions.
+* **Security Policy Guard:** Applies deterministic policy checks to evaluate proposed actions.
+* **Google Calendar Integration:** Supports calendar-related workflows through backend functions and Google OAuth.
+* **Provenance Support:** Includes helper logic for tracking action-related information.
+* **Web Interface:** Built with React and Vite.
+* **Backend Integration:** Uses Base44 services for authentication, entities, and server-side functions.
 
-- Node.js 20+ and npm.
-- A configured Base44 app for the SDK-based UI/functions.
-- A Nebius Token Factory API key.
-- Google OAuth credentials and an authorized redirect URI if Calendar integration is enabled.
+Feature availability depends on the current implementation and backend configuration.
 
-## Local setup
+## 🎯 Try it
 
-1. Copy `.env.example` to `.env.local` and fill in public Base44 configuration values. Never put `NEBIUS_API_KEY` or `GOOGLE_CLIENT_SECRET` in a `VITE_` variable or browser code.
-2. Install dependencies: `npm install`.
-3. Run the Vite frontend: `npm run dev`.
-4. Deploy/import the `functions/` and `entities/` files into the configured Base44 app according to the platform's current workflow.
+**Try AgentShield:** https://nocturnal-secure-agent-shield.base44.app
 
-The UI still calls Base44 APIs (`base44.entities.*` and `base44.functions.invoke`). A plain GitHub Pages deployment will not provide those backend services. GitHub stores the source; it does not run the Base44 backend.
+## 🧠 NVIDIA Nemotron & Nebius Token Factory
 
-## Security notes before public release
+AgentShield integrates the `nvidia/nemotron-3-super-120b-a12b` model through Nebius Token Factory using an OpenAI-compatible chat-completions endpoint.
 
-- Review ownership checks in `executeCalendarAction`; service-role access must not permit cross-user execution.
-- Do not trust `trust_level` supplied by the browser. Derive trust from a server-verified source.
-- Validate every model-generated action and its parameters with a strict schema.
-- Consider fail-closed defaults for high-risk actions and add an explicit, server-verified approval path for `ASK_USER`.
-- Add idempotency protection to avoid duplicate Calendar events.
-- OAuth tokens must remain server-side and never be logged or returned to the client.
-- The custom OAuth redirect URI currently points at the Base44 app URL and must match the Google Cloud OAuth configuration.
+The model supports AI-powered planning by interpreting user requests and proposing candidate Google Calendar actions. These proposed actions are intended to pass through a separate deterministic security layer before reaching the backend execution workflow.
 
-## Source fidelity
+Nebius Token Factory provides the model inference endpoint used to integrate Nemotron into the application.
 
-The two files `src/pages/Policies.jsx` and `src/pages/OAuthConsent.jsx` are preserved from pasted source attachments. Several app components and backend functions were reconstructed from the descriptions and code excerpts in the conversation; they are marked in their headers. Compare them with your Base44 editor before treating them as the canonical source.
+The AI model proposes actions; security validation and authorization should remain separate from the model's decision.
 
-## License
+## 🏗️ Architecture
 
-MIT license included for this project bundle. Confirm you have the right to sublicense all included dependencies, generated code, and platform-specific pieces before publishing. Third-party packages retain their own licenses.
+AgentShield combines AI planning with a separate security layer.
+
+1. **User Interface:** Receives user requests through the React + Vite application.
+2. **AI Planning:** Sends supported requests to NVIDIA Nemotron through Nebius Token Factory.
+3. **Security Validation:** Uses deterministic policy checks to evaluate proposed actions.
+4. **Backend Execution:** Routes supported operations through Base44 server functions.
+5. **Google Calendar:** Supports configured calendar operations through server-side OAuth integration.
+
+The security layer is designed to reduce reliance on AI-generated decisions alone. It does not guarantee that every unsafe action will be blocked.
+
+## 🧰 Technology Stack
+
+* **Frontend:** React + Vite
+* **AI Model:** `nvidia/nemotron-3-super-120b-a12b`
+* **AI Infrastructure:** Nebius Token Factory
+* **Backend Services:** Base44 SDK and server functions
+* **Calendar Integration:** Google Calendar OAuth
+* **Security Logic:** Deterministic policy guard and provenance helper
+
+## ⚙️ Requirements
+
+* Node.js 20 or later
+* npm
+* A configured Base44 application
+* A Nebius Token Factory API key
+* Google OAuth credentials if Calendar integration is enabled
+
+## 🚀 Local Setup
+
+### 1. Clone the repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+cd AgentShield
+```
+
+Replace `YOUR_GITHUB_REPOSITORY_URL` with your public GitHub repository URL.
+
+### 2. Configure environment variables
+
+Copy `.env.example` to `.env.local` and configure the required public frontend settings.
+
+```bash
+cp .env.example .env.local
+```
+
+**Security:** Never expose `NEBIUS_API_KEY`, `GOOGLE_CLIENT_SECRET`, or OAuth tokens in browser code or variables prefixed with `VITE_`. Keep secrets in the appropriate server-side environment.
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+Follow the local URL printed by Vite.
+
+### 5. Configure backend services
+
+Import or deploy the `functions/` and `entities/` files into the configured Base44 application according to the platform's supported workflow.
+
+The frontend relies on Base44 APIs, including `base44.entities.*` and `base44.functions.invoke`. Running the frontend alone does not provide these backend services.
+
+## 🔐 Security Considerations
+
+Before using AgentShield with real calendar data, review the following:
+
+* Enforce server-side authorization and resource ownership checks.
+* Never trust client-supplied trust levels or security decisions.
+* Validate AI-generated actions and parameters against strict schemas.
+* Require verified approval for sensitive or high-risk actions.
+* Add idempotency protection to prevent duplicate calendar events.
+* Keep OAuth tokens and API secrets server-side.
+* Validate OAuth state and protect against replay attacks.
+* Ensure the Google OAuth redirect URI matches the configured Base44 endpoint.
+
+These are security review priorities, not claims that every safeguard is already implemented.
+
+## 🧪 Project Status
+
+AgentShield is a development project exploring safer AI-agent interactions with Google Calendar.
+
+Some features require additional backend configuration, credentials, and testing. Verify the build, backend behavior, OAuth flow, and security controls before deploying the application with real user data.
+
+## 📂 Repository Structure
+
+```text
+AgentShield/
+├── src/          # Frontend application
+├── functions/    # Backend functions
+├── entities/     # Data entity definitions
+├── shared/       # Shared security and integration helpers
+├── .env.example  # Environment variable template
+├── README.md
+└── package.json
+```
+
+The exact structure may vary depending on the final source exported from Base44.
+
+## 📌 Source Code Notes
+
+Some files in this repository may be reconstructed from development notes or code excerpts rather than exported directly from the original Base44 application.
+
+Compare the repository against the original project before treating it as the canonical source. Verify the build, backend behavior, OAuth flow, and security controls before public release.
+
+## 📄 License
+
+This project includes an MIT license file. Confirm that you have the right to distribute all included code and that the license is appropriate for the project. Third-party dependencies remain subject to their respective licenses.
